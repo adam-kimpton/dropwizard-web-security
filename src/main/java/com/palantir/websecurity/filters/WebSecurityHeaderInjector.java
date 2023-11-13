@@ -8,16 +8,18 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.net.HttpHeaders;
 import com.palantir.websecurity.WebSecurityConfiguration;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Injects different security headers based on a {@link WebSecurityConfiguration}. These headers include:
+ * Injects different security headers based on a {@link WebSecurityConfiguration}. These headers
+ * include:
+ *
  * <ul>
- * <li>Content Security Policy (including support for IE 10 + 11)</li>
- * <li>Content Type Options</li>
- * <li>Frame Options</li>
- * <li>XSS Protection</li>
+ *   <li>Content Security Policy (including support for IE 10 + 11)
+ *   <li>Content Type Options
+ *   <li>Frame Options
+ *   <li>XSS Protection
  * </ul>
  */
 public final class WebSecurityHeaderInjector {
@@ -40,7 +42,8 @@ public final class WebSecurityHeaderInjector {
     public WebSecurityHeaderInjector(WebSecurityConfiguration config) {
         checkNotNull(config);
 
-        this.contentSecurityPolicy = config.contentSecurityPolicy().or(DEFAULT_CONTENT_SECURITY_POLICY);
+        this.contentSecurityPolicy =
+                config.contentSecurityPolicy().or(DEFAULT_CONTENT_SECURITY_POLICY);
         this.contentTypeOptions = config.contentTypeOptions().or(DEFAULT_CONTENT_TYPE_OPTIONS);
         this.frameOptions = config.frameOptions().or(DEFAULT_FRAME_OPTIONS);
         this.xssProtection = config.xssProtection().or(DEFAULT_XSS_PROTECTION);
@@ -57,7 +60,8 @@ public final class WebSecurityHeaderInjector {
             if (userAgent != null) {
                 // send the CSP header so that IE10 and IE11 recognise it
                 if (userAgent.contains(USER_AGENT_IE_10) || userAgent.contains(USER_AGENT_IE_11)) {
-                    response.setHeader(HEADER_IE_X_CONTENT_SECURITY_POLICY, this.contentSecurityPolicy);
+                    response.setHeader(
+                            HEADER_IE_X_CONTENT_SECURITY_POLICY, this.contentSecurityPolicy);
                 }
             }
         }

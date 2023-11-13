@@ -17,8 +17,8 @@ import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.immutables.value.Value;
 
 /**
- * Configuration class used to set the properties for a {@link CrossOriginFilter}. If a value is not set it will not be
- * passed in as an initial parameter.
+ * Configuration class used to set the properties for a {@link CrossOriginFilter}. If a value is not
+ * set it will not be passed in as an initial parameter.
  */
 @Value.Immutable
 @ImmutableStyles
@@ -28,48 +28,34 @@ public abstract class CorsConfiguration {
 
     private static final String DISABLED_ORIGINS = "";
 
-    /**
-     * If set, will be used to set the initial property {@code allowCredentials}.
-     */
+    /** If set, will be used to set the initial property {@code allowCredentials}. */
     public abstract Optional<Boolean> allowCredentials();
 
-    /**
-     * If set, will be used to set the initial property {@code allowedHeaders}.
-     */
+    /** If set, will be used to set the initial property {@code allowedHeaders}. */
     public abstract Optional<String> allowedHeaders();
 
-    /**
-     * If set, will be used to set the initial property {@code allowedMethods}.
-     */
+    /** If set, will be used to set the initial property {@code allowedMethods}. */
     public abstract Optional<String> allowedMethods();
 
-    /**
-     * If set, will be used to set the initial property {@code allowedOrigins}.
-     */
+    /** If set, will be used to set the initial property {@code allowedOrigins}. */
     public abstract Optional<String> allowedOrigins();
 
-    /**
-     * If set, will be used to set the initial property {@code chainPreflight}.
-     */
+    /** If set, will be used to set the initial property {@code chainPreflight}. */
     public abstract Optional<Boolean> chainPreflight();
 
     /**
-     * Determines if {@link CrossOriginFilter} is applied. Returns true if there is an {@link #allowedOrigins()} value
-     * set to a non-empty string, false otherwise.
+     * Determines if {@link CrossOriginFilter} is applied. Returns true if there is an {@link
+     * #allowedOrigins()} value set to a non-empty string, false otherwise.
      */
     @Value.Derived
     public boolean enabled() {
         return !allowedOrigins().or(DISABLED_ORIGINS).isEmpty();
     }
 
-    /**
-     * If set, will be used to set the initial property {@code exposedHeaders}.
-     */
+    /** If set, will be used to set the initial property {@code exposedHeaders}. */
     public abstract Optional<String> exposedHeaders();
 
-    /**
-     * If set, will be used to set the initial property {@code preflightMaxAge}.
-     */
+    /** If set, will be used to set the initial property {@code preflightMaxAge}. */
     public abstract Optional<Long> preflightMaxAge();
 
     @ValidationMethod(message = "preflightMaxAge can't be negative")
@@ -77,7 +63,9 @@ public abstract class CorsConfiguration {
         return preflightMaxAge().or(0L) >= 0L;
     }
 
-    @ValidationMethod(message = "allowedOrigins can't contain malformed URLs, URLs with a path, or malformed regex")
+    @ValidationMethod(
+            message =
+                    "allowedOrigins can't contain malformed URLs, URLs with a path, or malformed regex")
     private boolean isAllowedOriginsValid() {
         if (!allowedOrigins().isPresent()) {
             return true;
@@ -87,10 +75,11 @@ public abstract class CorsConfiguration {
             return true;
         }
 
-        List<String> origins = Splitter.on(",")
-                .omitEmptyStrings()
-                .trimResults()
-                .splitToList(allowedOrigins().get());
+        List<String> origins =
+                Splitter.on(",")
+                        .omitEmptyStrings()
+                        .trimResults()
+                        .splitToList(allowedOrigins().get());
 
         for (String origin : origins) {
             if (!validateOrigin(origin)) {
@@ -102,9 +91,13 @@ public abstract class CorsConfiguration {
     }
 
     /**
-     * Validates the origin, by the following rules: <ul> <li>Origins that are just {@code "*"} are not passed
-     * through</li> <li>If it contains a {@code *}, then it must be a valid regular expression.</li> <li>It must be a
-     * valid URL, without a path component</li> </ul>
+     * Validates the origin, by the following rules:
+     *
+     * <ul>
+     *   <li>Origins that are just {@code "*"} are not passed through
+     *   <li>If it contains a {@code *}, then it must be a valid regular expression.
+     *   <li>It must be a valid URL, without a path component
+     * </ul>
      */
     private static boolean validateOrigin(String origin) {
         try {
@@ -129,17 +122,12 @@ public abstract class CorsConfiguration {
         return true;
     }
 
-    /**
-     * Provides a configuration with default values.
-     */
+    /** Provides a configuration with default values. */
     public static final CorsConfiguration DEFAULT = CorsConfiguration.builder().build();
 
-    /**
-     * Provides a configuration that is disabled.
-     */
-    public static final CorsConfiguration DISABLED = CorsConfiguration.builder()
-            .allowedOrigins(DISABLED_ORIGINS)
-            .build();
+    /** Provides a configuration that is disabled. */
+    public static final CorsConfiguration DISABLED =
+            CorsConfiguration.builder().allowedOrigins(DISABLED_ORIGINS).build();
 
     // hides implementation details
     public static Builder builder() {

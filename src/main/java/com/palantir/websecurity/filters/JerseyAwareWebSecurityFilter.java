@@ -7,19 +7,19 @@ package com.palantir.websecurity.filters;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.palantir.websecurity.WebSecurityConfiguration;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
- * A filter that injects the App Security headers using a {@link WebSecurityHeaderInjector} to all requests except for
- * those on the {@link #jerseyRoot} path.
+ * A filter that injects the App Security headers using a {@link WebSecurityHeaderInjector} to all
+ * requests except for those on the {@link #jerseyRoot} path.
  */
 public final class JerseyAwareWebSecurityFilter implements Filter {
 
@@ -68,9 +68,7 @@ public final class JerseyAwareWebSecurityFilter implements Filter {
         return this.jerseyRoot.equals(cleanedServletPath);
     }
 
-    /**
-     * Cleans the Jersey root path to start with a slash and end without a star or slash.
-     */
+    /** Cleans the Jersey root path to start with a slash and end without a star or slash. */
     private static String cleanJerseyRoot(String rawJerseyRoot) {
         String cleaned = rawJerseyRoot;
 

@@ -7,18 +7,19 @@ package com.palantir.websecurity.filters;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.palantir.websecurity.WebSecurityConfiguration;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
- * A filter that injects the App Security headers using a {@link WebSecurityHeaderInjector} to every request.
+ * A filter that injects the App Security headers using a {@link WebSecurityHeaderInjector} to every
+ * request.
  */
 public final class WebSecurityFilter implements Filter {
 
@@ -49,7 +50,8 @@ public final class WebSecurityFilter implements Filter {
         checkNotNull(chain);
 
         if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
-            this.injector.injectHeaders((HttpServletRequest) request, (HttpServletResponse) response);
+            this.injector.injectHeaders(
+                    (HttpServletRequest) request, (HttpServletResponse) response);
         }
 
         chain.doFilter(request, response);

@@ -4,11 +4,12 @@
 
 package com.palantir.websecurity;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 /**
- * Used by the application's {@link io.dropwizard.Configuration} to provide a {@link WebSecurityConfiguration}.
+ * Used by the application's {@link io.dropwizard.core.Configuration} to provide a {@link
+ * WebSecurityConfiguration}.
  */
 public interface WebSecurityConfigurable {
 

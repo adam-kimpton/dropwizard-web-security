@@ -8,12 +8,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 import org.immutables.value.Value.Style;
 
-/**
- * Styles for immutable classes.
- */
-
+/** Styles for immutable classes. */
 @Target({ElementType.PACKAGE, ElementType.TYPE})
-@Style(
-        visibility = Style.ImplementationVisibility.PACKAGE
-)
+@Style(visibility = Style.ImplementationVisibility.PACKAGE)
 @interface ImmutableStyles {}
