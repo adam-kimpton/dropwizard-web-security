@@ -42,7 +42,7 @@ repositories {
 
 dependencies {
     def versions = [
-        dropwizard: '4.0.8',
+        dropwizard: '4.0.10',
         immutables: '2.10.0',
     ]
     // These dependencies are found on compile classpath of this component and consumers.
