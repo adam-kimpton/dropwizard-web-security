@@ -67,7 +67,7 @@ dependencies {
             "io.dropwizard:dropwizard-testing:${versions.dropwizard}",
             'org.junit.jupiter:junit-jupiter-api:5.13.2',
             'org.mockito:mockito-core:5.20.0',
-            'org.springframework:spring-test:6.2.11',
+            'org.springframework:spring-test:6.2.12',
             'jakarta.validation:jakarta.validation-api:3.1.1',
             )
 
